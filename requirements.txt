@@ -6,3 +6,5 @@ matplotlib
 openpyxl
 # اختياري:
 # xgboost
+pydrive2
+
