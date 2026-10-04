@@ -700,7 +700,7 @@ def plot_cat_counts(df, cols):
     return fig
 
 from sklearn.metrics import ConfusionMatrixDisplay
-
+import matplotlib.pyplot as plt
 
 def plot_confusion(cm, labels=None):
     fig, ax = plt.subplots(figsize=(5, 4))
