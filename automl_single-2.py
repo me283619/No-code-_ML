@@ -2055,7 +2055,7 @@ def results_supervised(res):
             else:
                 st.caption("الموديل ده مفيهوش Feature importance مباشر.")
         if task == "classification":
-                    unique_labels = np.unique(np.concatenate((yte, pred)))
+        unique_labels = np.unique(np.concatenate((yte, pred)))
         target_names_filtered = [str(l) for l in unique_labels]
         report_dict = skm.classification_report(
             yte,
