@@ -6,34 +6,6 @@ automl_single.py  —  تطبيق No-Code ML في ملف واحد (نسخة Pro)
 بيدعم: Classification / Regression / Clustering / Anomaly Detection / PCA-tSNE / Neural Network (MLP)
 """
 import streamlit as st
-
-# التحقق من كلمة السر
-def check_password():
-    if "password_correct" not in st.session_state:
-        st.session_state["password_correct"] = False
-
-    if st.session_state["password_correct"]:
-        return True
-
-    st.title("🔒 تسجيل الدخول للتطبيق")
-    password_input = st.text_input("أدخل كلمة السر للوصول:", type="password")
-    
-    if st.button("دخول"):
-        if password_input == st.secrets["credentials"]["admin_password"]:
-            st.session_state["password_correct"] = True
-            st.rerun()
-        else:
-            st.error("❌ كلمة السر غير صحيحة!")
-            
-    return False
-
-# إذا لم يتجاوز كلمة السر، يتوقف التنفيذ هنا ولا يظهر باقي التطبيق
-if not check_password():
-    st.stop()
-
-# --- من هنا يكمل باقي كود تطبيقك الأساسي بشكل عادي ---
-
-
 import pandas as pd
 import os
 
