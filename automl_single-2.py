@@ -698,17 +698,42 @@ def plot_cat_counts(df, cols):
         ax.axis("off")
     fig.tight_layout()
     return fig
-
-from sklearn.metrics import ConfusionMatrixDisplay
 import matplotlib.pyplot as plt
+
 
 def plot_confusion(cm, labels=None):
     fig, ax = plt.subplots(figsize=(5, 4))
-    disp = ConfusionMatrixDisplay(
-        confusion_matrix=cm, display_labels=labels if labels else None
-    )
-    disp.plot(cmap="Blues", ax=ax, values_format="d")
+    n_rows, n_cols = cm.shape
+
+    # رسم الماتريكس
+    im = ax.imshow(cm, cmap="Blues")
+
+    # إضافة الأرقام داخل الماتريكس
+    for i in range(n_rows):
+        for j in range(n_cols):
+            ax.text(
+                j,
+                i,
+                int(cm[i, j]),
+                ha="center",
+                va="center",
+                color="black",
+                fontsize=10,
+            )
+
+    # ضبط تسمية محاور الـ Labels
+    if labels is not None and len(labels) == n_cols:
+        ax.set_xticks(range(n_cols))
+        ax.set_yticks(range(n_rows))
+        ax.set_xticklabels(labels, rotation=45)
+        ax.set_yticklabels(labels)
+
+    ax.set_xlabel("Predicted")
+    ax.set_ylabel("True")
+    plt.tight_layout()
     return fig
+
+
 
 
 
