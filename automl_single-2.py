@@ -9,14 +9,40 @@ import os
 import pandas as pd
 import streamlit as st
 
-# 1️⃣ إعداد الصفحة الاصلي
+# 1️⃣ إعداد الصفحة
 st.set_page_config(
     page_title="No-Code ML Platform",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
-# 2️⃣ مجلد حفظ الملفات
+# 2️⃣ كود CSS المطور لمنع اختفاء السهم نهائياً بعد إغلاق السايدبار
+hide_st_style = """
+            <style>
+            /* إخفاء القائمة الرئيسية الثلاثية والـ Footer وأزرار Streamlit/GitHub */
+            #MainMenu {visibility: hidden !important;}
+            footer {visibility: hidden !important;}
+            .stAppDeployButton {display: none !important;}
+            [data-testid="stAppHeaderLinks"] {display: none !important;}
+            [data-testid="stDecoration"] {display: none !important;}
+            [data-testid="stStatusWidget"] {display: none !important;}
+
+            /* إجبار إظهار زر السهم في جميع حالاته (سواء السايدبار مفتوحة أو مقفولة) */
+            [data-testid="stSidebarCollapseButton"],
+            [data-testid="stSidebarCollapsedControl"],
+            [data-testid="stSidebarCollapsedControl"] button,
+            button[aria-label="Expand sidebar"],
+            button[aria-label="Close sidebar"] {
+                display: flex !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                z-index: 9999999 !important;
+            }
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
+
+# 3️⃣ مجلد حفظ الملفات
 UPLOAD_DIR = "uploaded_datasets"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
