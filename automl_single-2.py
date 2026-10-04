@@ -2065,7 +2065,7 @@ def results_supervised(res):
             output_dict=True,
             zero_division=0,
             )
-        rep = pd.DataFrame(report_dict).T.round(3)
+            rep = pd.DataFrame(report_dict).T.round(3)
 
             with st.expander("Classification report"):
                 show_df(rep)
