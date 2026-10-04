@@ -5,6 +5,44 @@ automl_single.py  —  تطبيق No-Code ML في ملف واحد (نسخة Pro)
 الصفحات: البيانات ← التحليل ← التنضيف (Outliers) ← التجهيز ← الخوارزميات ← النتائج ← الكود
 بيدعم: Classification / Regression / Clustering / Anomaly Detection / PCA-tSNE / Neural Network (MLP)
 """
+import streamlit as st
+import pandas as pd
+import os
+
+# مجلد محلي مؤقت لحفظ الملفات المرفوعة
+UPLOAD_DIR = "uploaded_datasets"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+st.sidebar.title("📁 سجل الملفات المرفوعة")
+
+# رفع ملف جديد
+uploaded_file = st.file_uploader("ارفع ملف داتا جديد", type=["csv", "xlsx"])
+
+if uploaded_file is not None:
+    file_path = os.path.join(UPLOAD_DIR, uploaded_file.name)
+    with open(file_path, "wb") as f:
+        f.write(uploaded_file.getbuffer())
+    st.success(f"تم حفظ الملف: {uploaded_file.name}")
+
+# قائمة بالملفات المحفوظة سابقاً
+saved_files = os.listdir(UPLOAD_DIR)
+
+if saved_files:
+    selected_file = st.sidebar.selectbox(
+        "اختر ملفاً من الملفات السابقة:",
+        options=saved_files
+    )
+    
+    # تحميل الداتا من الملف المختار
+    selected_path = os.path.join(UPLOAD_DIR, selected_file)
+    if selected_file.endswith('.csv'):
+        df = pd.read_csv(selected_path)
+    else:
+        df = pd.read_excel(selected_path)
+        
+    st.write(f"📊 الداتا الحالية: **{selected_file}**")
+    st.dataframe(df.head())
+
 import base64
 import io
 import json
