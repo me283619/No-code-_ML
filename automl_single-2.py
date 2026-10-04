@@ -2064,7 +2064,7 @@ def results_supervised(res):
             target_names=target_names_filtered,
             output_dict=True,
             zero_division=0,
-        )
+            )
         rep = pd.DataFrame(report_dict).T.round(3)
 
             with st.expander("Classification report"):
