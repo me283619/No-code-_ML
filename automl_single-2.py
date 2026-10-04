@@ -9,44 +9,14 @@ import os
 import pandas as pd
 import streamlit as st
 
-# 1️⃣ إعداد الصفحة
+# 1️⃣ إعداد الصفحة الاصلي
 st.set_page_config(
     page_title="No-Code ML Platform",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
-# 2️⃣ كود CSS محدد لإخفاء زر Deploy وشعار GitHub مع الحفاظ على القوائم وأدوات الموبايل
-hide_st_style = """
-            <style>
-            /* إخفاء زر التنويه والـ Deploy ورابط GitHub المباشر فقط */
-            .stAppDeployButton {
-                display: none !important;
-            }
-            [data-testid="stAppHeaderLinks"] {
-                display: none !important;
-            }
-            [data-testid="stDecoration"] {
-                display: none !important;
-            }
-            footer {
-                visibility: hidden !important;
-            }
-
-            /* إظهار وتأكيد زر السهم وشريط الأدوات الخاص بالسايدبار */
-            [data-testid="stSidebarCollapseButton"],
-            [data-testid="stSidebarCollapsedControl"],
-            button[aria-label="Expand sidebar"],
-            button[aria-label="Close sidebar"] {
-                display: inline-flex !important;
-                visibility: visible !important;
-                opacity: 1 !important;
-            }
-            </style>
-            """
-st.markdown(hide_st_style, unsafe_allow_html=True)
-
-# 3️⃣ مجلد حفظ الملفات
+# 2️⃣ مجلد حفظ الملفات
 UPLOAD_DIR = "uploaded_datasets"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
