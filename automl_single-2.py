@@ -9,41 +9,25 @@ import os
 import pandas as pd
 import streamlit as st
 
-# 1️⃣ إعداد الصفحة لفتح القائمة الجانبية تلقائياً
+# 1️⃣ إعداد الصفحة
 st.set_page_config(
     page_title="No-Code ML Platform",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="expanded",  # يفتح السايدبار تلقائياً
 )
 
-# 2️⃣ كود CSS لإخفاء الهيدر وأزرار Streamlit مع تثبيت زر فتح السايدبار في الأعلى
+# 2️⃣ كود CSS بسيط لإخفاء أزرار Streamlit و GitHub فقط مع ترك السايدبار طبيعي 100%
 hide_st_style = """
             <style>
-            /* إخفاء القائمة الرئيسية الثلاثية والـ Footer والأزرار العلوية */
+            /* إخفاء القائمة الرئيسية والـ Footer */
             #MainMenu {visibility: hidden !important;}
             footer {visibility: hidden !important;}
+
+            /* إخفاء زر Deploy ورابط GitHub والشارات فقط */
             .stAppDeployButton {display: none !important;}
             [data-testid="stAppHeaderLinks"] {display: none !important;}
             [data-testid="stDecoration"] {display: none !important;}
             [data-testid="stStatusWidget"] {display: none !important;}
-
-            /* جعل زر فتح السايدبار عائماً وظاهراً بشكل دائم فوق كل الطبقات */
-            [data-testid="stSidebarCollapseButton"],
-            [data-testid="stSidebarCollapsedControl"],
-            button[aria-label="Expand sidebar"],
-            button[aria-label="Close sidebar"] {
-                display: flex !important;
-                visibility: visible !important;
-                opacity: 1 !important;
-                position: fixed !important;
-                top: 10px !important;
-                left: 10px !important;
-                z-index: 9999999 !important;
-                background-color: #ffffff !important;
-                border: 1px solid #cccccc !important;
-                border-radius: 8px !important;
-                box-shadow: 0px 2px 5px rgba(0,0,0,0.2) !important;
-            }
             </style>
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
