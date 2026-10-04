@@ -8,18 +8,21 @@ automl_single.py  —  تطبيق No-Code ML في ملف واحد (نسخة Pro)
 import os
 import pandas as pd
 import streamlit as st
+import os
+import pandas as pd
+import streamlit as st
 
-# 1️⃣ إعداد الصفحة
+# 1️⃣ إعداد الصفحة واشتراط فتح السايدبار تلقائياً
 st.set_page_config(
     page_title="No-Code ML Platform",
     layout="wide",
-    initial_sidebar_state="expanded",  # يفتح السايدبار تلقائياً
+    initial_sidebar_state="expanded"
 )
 
-# 2️⃣ كود CSS بسيط لإخفاء أزرار Streamlit و GitHub فقط مع ترك السايدبار طبيعي 100%
+# 2️⃣ كود الـ CSS المضمون لإظهار زر السايدبار دائماً مع إخفاء شعارات Streamlit و GitHub
 hide_st_style = """
             <style>
-            /* إخفاء القائمة الرئيسية والـ Footer */
+            /* إخفاء القائمة الرئيسية الثلاثية والـ Footer */
             #MainMenu {visibility: hidden !important;}
             footer {visibility: hidden !important;}
 
@@ -28,13 +31,26 @@ hide_st_style = """
             [data-testid="stAppHeaderLinks"] {display: none !important;}
             [data-testid="stDecoration"] {display: none !important;}
             [data-testid="stStatusWidget"] {display: none !important;}
+
+            /* إظهار وتثبيت زر فتح وإغلاق السايدبار ليكون ظاهراً دائماً */
+            [data-testid="stSidebarCollapseButton"],
+            [data-testid="stSidebarCollapsedControl"],
+            button[aria-label="Expand sidebar"],
+            button[aria-label="Close sidebar"] {
+                display: flex !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                z-index: 999999 !important;
+            }
             </style>
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
-# 3️⃣ المجلد المحلي لحفظ الملفات المرفوعة
+# 3️⃣ مجلد حفظ الملفات
 UPLOAD_DIR = "uploaded_datasets"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+
 
 st.sidebar.title("📁 سجل الملفات المرفوعة")
 
