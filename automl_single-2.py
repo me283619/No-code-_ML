@@ -5,31 +5,29 @@ automl_single.py  —  تطبيق No-Code ML في ملف واحد (نسخة Pro)
 الصفحات: البيانات ← التحليل ← التنضيف (Outliers) ← التجهيز ← الخوارزميات ← النتائج ← الكود
 بيدعم: Classification / Regression / Clustering / Anomaly Detection / PCA-tSNE / Neural Network (MLP)
 """
-import streamlit as st
-import pandas as pd
 import os
+import pandas as pd
+import streamlit as st
 
-# 1️⃣ إعداد الصفحة لفتح القائمة الجانبية تلقائياً بشكل افتراضي
+# 1️⃣ إعداد الصفحة لفتح القائمة الجانبية تلقائياً
 st.set_page_config(
     page_title="No-Code ML Platform",
     layout="wide",
-    initial_sidebar_state="expanded",  # يضمن ظهور السايدبار مفتوحة أول ما التطبيق يفتح
+    initial_sidebar_state="expanded",
 )
 
-# 2️⃣ كود الـ CSS لإخفاء branding الخاص بـ Streamlit و GitHub مع الحفاظ على زر السهم للسايدبار
+# 2️⃣ كود CSS لإخفاء الهيدر وأزرار Streamlit مع تثبيت زر فتح السايدبار في الأعلى
 hide_st_style = """
             <style>
-            /* إخفاء القائمة الرئيسية الثلاثية والـ Footer */
+            /* إخفاء القائمة الرئيسية الثلاثية والـ Footer والأزرار العلوية */
             #MainMenu {visibility: hidden !important;}
             footer {visibility: hidden !important;}
-            
-            /* إخفاء أزرار Deploy ورابط GitHub والشعارات */
             .stAppDeployButton {display: none !important;}
             [data-testid="stAppHeaderLinks"] {display: none !important;}
             [data-testid="stDecoration"] {display: none !important;}
             [data-testid="stStatusWidget"] {display: none !important;}
-            
-            /* إظهار زر السهم لفتح وإغلاق القائمة الجانبية دائماً دون إخفائه */
+
+            /* جعل زر فتح السايدبار عائماً وظاهراً بشكل دائم فوق كل الطبقات */
             [data-testid="stSidebarCollapseButton"],
             [data-testid="stSidebarCollapsedControl"],
             button[aria-label="Expand sidebar"],
@@ -37,7 +35,14 @@ hide_st_style = """
                 display: flex !important;
                 visibility: visible !important;
                 opacity: 1 !important;
+                position: fixed !important;
+                top: 10px !important;
+                left: 10px !important;
                 z-index: 9999999 !important;
+                background-color: #ffffff !important;
+                border: 1px solid #cccccc !important;
+                border-radius: 8px !important;
+                box-shadow: 0px 2px 5px rgba(0,0,0,0.2) !important;
             }
             </style>
             """
