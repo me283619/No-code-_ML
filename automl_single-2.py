@@ -9,31 +9,41 @@ import streamlit as st
 import pandas as pd
 import os
 
+# 1️⃣ إعداد الصفحة لفتح القائمة الجانبية تلقائياً بشكل افتراضي
+st.set_page_config(
+    page_title="No-Code ML Platform",
+    layout="wide",
+    initial_sidebar_state="expanded",  # يضمن ظهور السايدبار مفتوحة أول ما التطبيق يفتح
+)
 
-# كود إخفاء أزرار GitHub والقوائم مع الإبقاء على زر القائمة الجانبية (Sidebar Toggle)
+# 2️⃣ كود الـ CSS لإخفاء branding الخاص بـ Streamlit و GitHub مع الحفاظ على زر السهم للسايدبار
 hide_st_style = """
             <style>
             /* إخفاء القائمة الرئيسية الثلاثية والـ Footer */
             #MainMenu {visibility: hidden !important;}
             footer {visibility: hidden !important;}
             
-            /* إخفاء أزرار Deploy و GitHub والشعارات فقط */
+            /* إخفاء أزرار Deploy ورابط GitHub والشعارات */
             .stAppDeployButton {display: none !important;}
             [data-testid="stAppHeaderLinks"] {display: none !important;}
             [data-testid="stDecoration"] {display: none !important;}
             [data-testid="stStatusWidget"] {display: none !important;}
             
-            /* إظهار زر السهم الخاص بالقائمة الجانبية لفتحها */
+            /* إظهار زر السهم لفتح وإغلاق القائمة الجانبية دائماً دون إخفائه */
             [data-testid="stSidebarCollapseButton"],
-            [data-testid="stSidebarCollapsedControl"] {
-                display: block !important;
+            [data-testid="stSidebarCollapsedControl"],
+            button[aria-label="Expand sidebar"],
+            button[aria-label="Close sidebar"] {
+                display: flex !important;
                 visibility: visible !important;
-                z-index: 999999 !important;
+                opacity: 1 !important;
+                z-index: 9999999 !important;
             }
             </style>
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
-# مجلد محلي مؤقت لحفظ الملفات المرفوعة
+
+# 3️⃣ المجلد المحلي لحفظ الملفات المرفوعة
 UPLOAD_DIR = "uploaded_datasets"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
