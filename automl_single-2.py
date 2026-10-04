@@ -699,24 +699,18 @@ def plot_cat_counts(df, cols):
     fig.tight_layout()
     return fig
 
+from sklearn.metrics import ConfusionMatrixDisplay
 
-def plot_confusion(cm, labels):
-    n = len(labels)
-    fig, ax = _fig1(min(7, 2.5 + 0.6 * n), min(6, 2.2 + 0.55 * n))
-    ax.imshow(cm, cmap="Blues")
-    ax.set_xticks(range(n))
-    ax.set_yticks(range(n))
-    ax.set_xticklabels(labels, rotation=45, ha="right", fontsize=8)
-    ax.set_yticklabels(labels, fontsize=8)
-    ax.set_xlabel("Predicted", color=MUTED, fontsize=8)
-    ax.set_ylabel("Actual", color=MUTED, fontsize=8)
-    ax.grid(False)
-    for i in range(n):
-        for j in range(n):
-            ax.text(j, i, int(cm[i, j]), ha="center", va="center", fontsize=9,
-                    color="white" if cm[i, j] > cm.max() / 2 else INK)
-    fig.tight_layout()
+
+def plot_confusion(cm, labels=None):
+    fig, ax = plt.subplots(figsize=(5, 4))
+    disp = ConfusionMatrixDisplay(
+        confusion_matrix=cm, display_labels=labels if labels else None
+    )
+    disp.plot(cmap="Blues", ax=ax, values_format="d")
     return fig
+
+
 
 
 def plot_actual_pred(y, pred):
