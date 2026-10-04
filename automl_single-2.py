@@ -2069,6 +2069,48 @@ def results_supervised(res):
 
             with st.expander("Classification report"):
                 show_df(rep)
+        # --- بداية ميزة حفظ الموديل ---
+        import json
+        import pickle
+
+        MODELS_DIR = "saved_models"
+        os.makedirs(MODELS_DIR, exist_ok=True)
+
+        st.markdown("---")
+        st.subheader("💾 حفظ الموديل في سجل التطبيق")
+
+        model_name_input = st.text_input(
+            "اسم الموديل للحفظ:", placeholder="مثال: Random_Forest_Model"
+        )
+
+        if st.button("حفظ الموديل بالكامل"):
+            if model_name_input.strip() != "":
+                model_path = os.path.join(MODELS_DIR, f"{model_name_input}.pkl")
+                meta_path = os.path.join(
+                    MODELS_DIR, f"{model_name_input}_meta.json"
+                )
+
+                # 1. حفظ الموديل/الـ Pipeline
+                with open(model_path, "wb") as f:
+                    pickle.dump(pipe, f)
+
+                # 2. حفظ مقاييس الأداء
+                metadata = {
+                    "model_name": model_name_input,
+                    "task": task,
+                    "features": (
+                        list(res["Xte"].columns) if "Xte" in res else []
+                    ),
+                    "metrics": rep.to_dict() if "rep" in locals() else {},
+                }
+
+                with open(meta_path, "w", encoding="utf-8") as f:
+                    json.dump(metadata, f, ensure_ascii=False, indent=4)
+
+                st.success(f"تم حفظ الموديل '{model_name_input}' بنجاح! 🎯")
+            else:
+                st.warning("يرجى إدخال اسم للموديل أولاً.")
+        # --- نهاية ميزة حفظ الموديل ---
         out = res["Xte"].copy()
         out["actual"] = res["le"].inverse_transform(yte) if res["le"] is not None else yte
         out["predicted"] = res["le"].inverse_transform(pred) if res["le"] is not None else pred
@@ -2200,3 +2242,50 @@ if _page != "data" and S.get("raw") is None:
     empty_state("ابدأ بالداتا", "ارفع ملف أو اختار داتا تجريبية الأول.", "data", "روح لصفحة البيانات")
 else:
     PAGE_FUNCS[_page]()
+# --- بداية عرض سجل الموديلات في الـ Sidebar ---
+import json
+import os
+import pandas as pd
+import streamlit as st
+
+st.sidebar.markdown("---")
+st.sidebar.title("🤖 سجل الموديلات المحفوظة")
+
+MODELS_DIR = "saved_models"
+
+if os.path.exists(MODELS_DIR):
+    meta_files = [f for f in os.listdir(MODELS_DIR) if f.endswith("_meta.json")]
+
+    if meta_files:
+        model_options = [f.replace("_meta.json", "") for f in meta_files]
+        selected_model = st.sidebar.selectbox(
+            "اختر موديل لمعاينة أدائه:", model_options
+        )
+
+        if selected_model:
+            meta_path = os.path.join(MODELS_DIR, f"{selected_model}_meta.json")
+            model_path = os.path.join(MODELS_DIR, f"{selected_model}.pkl")
+
+            with open(meta_path, "r", encoding="utf-8") as f:
+                model_meta = json.load(f)
+
+            if st.sidebar.button("عرض تقرير الموديل"):
+                st.write(f"### 📊 تقرير الموديل المحفوظ: {selected_model}")
+                st.write(f"**نوع المهمة:** {model_meta.get('task')}")
+                st.write("**الميزات المستخدمة (Features):**")
+                st.json(model_meta.get("features"))
+
+                st.write("**جدول النتائج (Classification Report):**")
+                saved_rep = pd.DataFrame(model_meta.get("metrics"))
+                st.dataframe(saved_rep)
+
+            with open(model_path, "rb") as f:
+                st.sidebar.download_button(
+                    label="📥 تنزيل الموديل (.pkl)",
+                    data=f,
+                    file_name=f"{selected_model}.pkl",
+                    mime="application/octet-stream",
+                )
+    else:
+        st.sidebar.info("لا توجد موديلات محفوظة بعد.")
+# --- نهاية عرض سجل الموديلات ---
