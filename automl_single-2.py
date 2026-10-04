@@ -8,39 +8,39 @@ automl_single.py  —  تطبيق No-Code ML في ملف واحد (نسخة Pro)
 import os
 import pandas as pd
 import streamlit as st
-import os
-import pandas as pd
-import streamlit as st
 
-# 1️⃣ إعداد الصفحة واشتراط فتح السايدبار تلقائياً
+# 1️⃣ إعداد الصفحة
 st.set_page_config(
     page_title="No-Code ML Platform",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
 )
 
-# 2️⃣ كود الـ CSS المضمون لإظهار زر السايدبار دائماً مع إخفاء شعارات Streamlit و GitHub
+# 2️⃣ كود CSS محدد لإخفاء زر Deploy وشعار GitHub مع الحفاظ على القوائم وأدوات الموبايل
 hide_st_style = """
             <style>
-            /* إخفاء القائمة الرئيسية الثلاثية والـ Footer */
-            #MainMenu {visibility: hidden !important;}
-            footer {visibility: hidden !important;}
+            /* إخفاء زر التنويه والـ Deploy ورابط GitHub المباشر فقط */
+            .stAppDeployButton {
+                display: none !important;
+            }
+            [data-testid="stAppHeaderLinks"] {
+                display: none !important;
+            }
+            [data-testid="stDecoration"] {
+                display: none !important;
+            }
+            footer {
+                visibility: hidden !important;
+            }
 
-            /* إخفاء زر Deploy ورابط GitHub والشارات فقط */
-            .stAppDeployButton {display: none !important;}
-            [data-testid="stAppHeaderLinks"] {display: none !important;}
-            [data-testid="stDecoration"] {display: none !important;}
-            [data-testid="stStatusWidget"] {display: none !important;}
-
-            /* إظهار وتثبيت زر فتح وإغلاق السايدبار ليكون ظاهراً دائماً */
+            /* إظهار وتأكيد زر السهم وشريط الأدوات الخاص بالسايدبار */
             [data-testid="stSidebarCollapseButton"],
             [data-testid="stSidebarCollapsedControl"],
             button[aria-label="Expand sidebar"],
             button[aria-label="Close sidebar"] {
-                display: flex !important;
+                display: inline-flex !important;
                 visibility: visible !important;
                 opacity: 1 !important;
-                z-index: 999999 !important;
             }
             </style>
             """
