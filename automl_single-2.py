@@ -10,13 +10,23 @@ import pandas as pd
 import os
 
 
-# إخفاء قائمة Streamlit والأزرار العلوية للشعار وGitHub
+# إخفاء كافة عناصر الشريط العلوي والقائمة في التحديثات الحديثة لـ Streamlit
 hide_st_style = """
             <style>
-            #MainMenu {visibility: hidden;}
-            header {visibility: hidden;}
-            footer {visibility: hidden;}
-            [data-testid="stHeader"] {display: none;}
+            /* إخفاء الشريط العلوي بالكامل */
+            [data-testid="stHeader"] {
+                display: none !important;
+            }
+            /* إخفاء القائمة العلوية والأزرار الملحقة */
+            #MainMenu {visibility: hidden !important;}
+            header {visibility: hidden !important;}
+            footer {visibility: hidden !important;}
+            
+            /* إخفاء أزرار الـ Deploy و GitHub في النسخ الحديثة */
+            .stAppDeployButton {display: none !important;}
+            [data-testid="stToolbar"] {display: none !important;}
+            [data-testid="stDecoration"] {display: none !important;}
+            [data-testid="stStatusWidget"] {display: none !important;}
             </style>
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
