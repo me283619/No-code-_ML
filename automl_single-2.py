@@ -9,6 +9,17 @@ import streamlit as st
 import pandas as pd
 import os
 
+
+# إخفاء قائمة Streamlit والأزرار العلوية للشعار وGitHub
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            header {visibility: hidden;}
+            footer {visibility: hidden;}
+            [data-testid="stHeader"] {display: none;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
 # مجلد محلي مؤقت لحفظ الملفات المرفوعة
 UPLOAD_DIR = "uploaded_datasets"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
