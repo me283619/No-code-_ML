@@ -10,23 +10,26 @@ import pandas as pd
 import os
 
 
-# إخفاء كافة عناصر الشريط العلوي والقائمة في التحديثات الحديثة لـ Streamlit
+# كود إخفاء أزرار GitHub والقوائم مع الإبقاء على زر القائمة الجانبية (Sidebar Toggle)
 hide_st_style = """
             <style>
-            /* إخفاء الشريط العلوي بالكامل */
-            [data-testid="stHeader"] {
-                display: none !important;
-            }
-            /* إخفاء القائمة العلوية والأزرار الملحقة */
+            /* إخفاء القائمة الرئيسية الثلاثية والـ Footer */
             #MainMenu {visibility: hidden !important;}
-            header {visibility: hidden !important;}
             footer {visibility: hidden !important;}
             
-            /* إخفاء أزرار الـ Deploy و GitHub في النسخ الحديثة */
+            /* إخفاء أزرار Deploy و GitHub والشعارات فقط */
             .stAppDeployButton {display: none !important;}
-            [data-testid="stToolbar"] {display: none !important;}
+            [data-testid="stAppHeaderLinks"] {display: none !important;}
             [data-testid="stDecoration"] {display: none !important;}
             [data-testid="stStatusWidget"] {display: none !important;}
+            
+            /* إظهار زر السهم الخاص بالقائمة الجانبية لفتحها */
+            [data-testid="stSidebarCollapseButton"],
+            [data-testid="stSidebarCollapsedControl"] {
+                display: block !important;
+                visibility: visible !important;
+                z-index: 999999 !important;
+            }
             </style>
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
