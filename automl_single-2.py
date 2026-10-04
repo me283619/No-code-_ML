@@ -1444,7 +1444,10 @@ html, body, .stApp, .stMarkdown, p, label, h1, h2, h3, h4, h5, li, button, input
 [data-baseweb="select"], [data-baseweb="tab"], [data-testid="stMarkdownContainer"] {
     font-family: 'IBM Plex Sans Arabic', 'Segoe UI', Tahoma, sans-serif !important; }
 .stApp { background: var(--bg); color: var(--ink); }
-#MainMenu, footer, [data-testid="stToolbar"], [data-testid="stDecoration"], [data-testid="stStatusWidget"] { display:none !important; }
+#MainMenu, footer, [data-testid="stDecoration"], [data-testid="stStatusWidget"],
+[data-testid="stToolbarActions"], [data-testid="stMainMenu"], .stAppDeployButton { display:none !important; }
+[data-testid="stToolbar"] { background: transparent; }
+[data-testid="stExpandSidebarButton"], [data-testid="stSidebarCollapsedControl"] { display:flex !important; visibility:visible !important; }
 [data-testid="stHeader"] { background: transparent; }
 .block-container { padding: 1.6rem 2.2rem 4rem; max-width: 1280px; }
 p, li, label p, h1, h2, h3, h4, [data-testid="stCaptionContainer"] { unicode-bidi: plaintext; text-align: start; }
